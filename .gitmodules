@@ -1,6 +1,6 @@
 [submodule "devices/metaMCU_AT32F407/Firmware/AT32F403A_407_Firmware_Library"]
-	path = devices/metaMCU_AT32F407/Firmware/AT32F403A_407_Firmware_Library
+	path = device/Firmware_AT32F407_403/AT32F403A_407_Firmware_Library
 	url = https://github.com/ArteryTek/AT32F403A_407_Firmware_Library
 [submodule "devices/metaMCU_AT32F407/RegistersGenerator"]
-	path = devices/metaMCU_AT32F407/RegistersGenerator
+	path = device/RegistersGenerator
 	url = git@github.com:asafran/RegistersGenerator.git

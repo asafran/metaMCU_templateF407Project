@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.21)
 
-project(template_AT32F407_project)
+project(template_AT32F407_project
 VERSION 0.0.1
-DESCRIPTION "metaMCU AT32F407 package")
+DESCRIPTION "metaMCU AT32F407 template project")
 
 enable_language(C CXX ASM)
 set(CMAKE_C_STANDARD 11)
@@ -12,11 +12,14 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
-add_subdirectory(devices/metaMCU_AT32F407)
+add_subdirectory(device/Firmware_AT32F407_403)
+add_subdirectory(device/metaMCU_AT32F407)
+
+set(DEVICE "AT32F407VGT7" CACHE STRING "")
 
 option(DUMP_ASM "Create full assembly of final executable" OFF)
 
-set(EXECUTABLE ${CMAKE_PROJECT_NAME})
+set(EXECUTABLE template_project_executable)
 
 set(PROJECT_SOURCES
     src/main.cpp
@@ -24,11 +27,12 @@ set(PROJECT_SOURCES
 
 add_executable(${EXECUTABLE} ${PROJECT_SOURCES})
 
-target_compile_definitions(${EXECUTABLE} PRIVATE "AT32F407VGT7")
-
 target_include_directories(${EXECUTABLE} PRIVATE include)
 
-target_link_libraries(${EXECUTABLE} PRIVATE metaMCU::AT32F407)
+target_include_directories(Firmware_AT32F403A_407 PUBLIC include) #for conf.h
+
+target_link_libraries(${EXECUTABLE} PRIVATE Firmware_AT32F403A_407)
+target_link_libraries(${EXECUTABLE} PRIVATE metaMCU_AT32F407)
 
 ###############################################################################
 target_compile_options(${EXECUTABLE} PRIVATE
