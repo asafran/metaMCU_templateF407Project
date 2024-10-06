@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.21)
 
-project(Firmware_AT32F403A_407
+project(AT32F403A_407_Firmware_Library
 VERSION 0.0.1
 DESCRIPTION "AT32F407_403 Firmware package")
 
@@ -22,28 +22,17 @@ set(DRIVER_LIBRARY ${FIRMWARE_LIBRARY}/libraries/drivers)
 set(STARTUP_SCRIPT ${FIRMWARE_LIBRARY}/libraries/cmsis/cm4/device_support/startup/gcc/startup_at32f403a_407.s)
 set(MCU_LINKER_SCRIPT ${FIRMWARE_LIBRARY}/libraries/cmsis/cm4/device_support/startup/gcc/linker)
 
-set(OUTPUT "" CACHE STRING "")
-
-string(REGEX MATCH "AT32(F40[37]A?).(.).7" OUTPUT ${DEVICE})
-
-message(REGEX1="${CMAKE_MATCH_1}")
-message(REGEX2="${CMAKE_MATCH_2}")
-
-string(APPEND MCU_LINKER_SCRIPT "/AT32${CMAKE_MATCH_1}x${CMAKE_MATCH_2}_FLASH.ld")
-
-message(LINK="${MCU_LINKER_SCRIPT}")
-
-if(NOT ${CMAKE_MATCH_0} STREQUAL ${DEVICE})
-    message(SEND_ERROR Error: incorrect DEVICE variable ${DEVICE})
+if(NOT DEFINED DEVICE)
+    message(SEND_ERROR "Error: set DEVICE variable")
 endif()
 
-add_library(Firmware_AT32F403A_407)
+set(OUTPUT "" CACHE STRING "")
+string(REGEX MATCH "AT32(F40[37]A?).(.).7" OUTPUT ${DEVICE})
+string(APPEND MCU_LINKER_SCRIPT "/AT32${CMAKE_MATCH_1}x${CMAKE_MATCH_2}_FLASH.ld")
 
-target_compile_definitions(Firmware_AT32F403A_407 PUBLIC ${DEVICE})
-target_compile_options(Firmware_AT32F403A_407 PUBLIC ${CPU_PARAMETERS})
-target_link_options(Firmware_AT32F403A_407 PUBLIC -T${MCU_LINKER_SCRIPT} ${CPU_PARAMETERS})
-
-target_include_directories(Firmware_AT32F403A_407 PUBLIC ${DEVICE_LIBRARY} ${CORE_LIBRARY} ${DRIVER_LIBRARY}/inc)
+if(NOT ${CMAKE_MATCH_0} STREQUAL ${DEVICE})
+    message(SEND_ERROR "Error: incorrect DEVICE variable ${DEVICE}")
+endif()
 
 file(GLOB DEVICE_SOURCES CONFIGURE_DEPENDS
     ${DEVICE_LIBRARY}/*.c
@@ -54,4 +43,12 @@ file(GLOB DEVICE_SOURCES CONFIGURE_DEPENDS
     ${DRIVER_LIBRARY}/inc/*.h
     )
 
-target_sources(Firmware_AT32F403A_407 PUBLIC ${DEVICE_SOURCES} ${STARTUP_SCRIPT})
+add_library(Firmware_AT32F403A_407 OBJECT ${DEVICE_SOURCES} ${STARTUP_SCRIPT})
+
+target_compile_definitions(Firmware_AT32F403A_407 PUBLIC ${DEVICE})
+target_compile_options(Firmware_AT32F403A_407 PUBLIC ${CPU_PARAMETERS})
+target_link_options(Firmware_AT32F403A_407 PUBLIC -T${MCU_LINKER_SCRIPT} ${CPU_PARAMETERS})
+target_include_directories(Firmware_AT32F403A_407 PUBLIC ${DEVICE_LIBRARY} ${CORE_LIBRARY} ${DRIVER_LIBRARY}/inc)
+
+add_library(Interface_AT32F403A_407 INTERFACE)
+target_link_libraries(Interface_AT32F403A_407 INTERFACE Firmware_AT32F403A_407 $<TARGET_OBJECTS:Firmware_AT32F403A_407>)

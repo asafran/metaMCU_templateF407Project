@@ -15,8 +15,6 @@ set(CMAKE_CXX_EXTENSIONS ON)
 add_subdirectory(device/Firmware_AT32F407_403)
 add_subdirectory(device/metaMCU_AT32F407)
 
-set(DEVICE "AT32F407VGT7" CACHE STRING "")
-
 option(DUMP_ASM "Create full assembly of final executable" OFF)
 
 set(EXECUTABLE template_project_executable)
@@ -29,10 +27,10 @@ add_executable(${EXECUTABLE} ${PROJECT_SOURCES})
 
 target_include_directories(${EXECUTABLE} PRIVATE include)
 
-target_include_directories(Firmware_AT32F403A_407 PUBLIC include) #for conf.h
+target_include_directories(Firmware_AT32F403A_407 PRIVATE include) #for conf.h
 
-target_link_libraries(${EXECUTABLE} PRIVATE Firmware_AT32F403A_407)
-target_link_libraries(${EXECUTABLE} PRIVATE metaMCU_AT32F407)
+target_link_libraries(${EXECUTABLE} Firmware_AT32F403A_407)
+target_link_libraries(${EXECUTABLE} metaMCU::AT32F407)
 
 ###############################################################################
 target_compile_options(${EXECUTABLE} PRIVATE

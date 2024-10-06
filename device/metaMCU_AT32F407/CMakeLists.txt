@@ -15,7 +15,7 @@ set(REGISTERS_DIRECTORIES
 	)
 
 add_library(metaMCU_AT32F407 INTERFACE)
+add_library(metaMCU::AT32F407 ALIAS metaMCU_AT32F407)
 
-target_link_libraries(metaMCU_AT32F407 INTERFACE Firmware_AT32F407_403)
 target_link_libraries(metaMCU_AT32F407 INTERFACE metaMCU)
 target_include_directories(metaMCU_AT32F407 INTERFACE ${REGISTERS_DIRECTORIES})
