@@ -1,8 +1,10 @@
 #ifndef ARTERYPIN_HPP
 #define ARTERYPIN_HPP
 
+#include "configutils.hpp"
 #include "register.hpp"
 #include "fields.hpp"
+#include "pin.hpp"
 
 namespace AT32F407xx_v2 {
     template <unsigned int pinNum>
@@ -55,7 +57,9 @@ namespace AT32F407xx_v2 {
         using IOMC = RegisterField<CFGR, (pinNum - 8) * 4, 2, ReadWriteMode>;
     };
 
-    template<typename GPIO, unsigned int pinNum, typename Configuration>
+    struct SpecializationKey{};
+
+    template<typename GPIO, unsigned int pinNum>
         requires InRange<pinNum>
     struct ArteryPin
     {
@@ -73,6 +77,8 @@ namespace AT32F407xx_v2 {
         using NormalOutputModeValue = FieldValue<IOMC, 2U>;
 
     public:
+        using SpecializationKey = SpecializationKey;
+
         using AnalogModeValue = Values<FieldValue<IOFC, 0U>, InputModeValue>;
         using FloatingModeValue = Values<FieldValue<IOFC, 1U>, InputModeValue>;
         using PullUpDownModeValue = Values<FieldValue<IOFC, 2U>, InputModeValue>;
@@ -96,5 +102,8 @@ namespace AT32F407xx_v2 {
         using MaximumStrValue = FieldValue<HDRV, 1U>;
     };
 } // namespace artery
+
+template <typename Pin>
+struct PinsConfiguration<Pin, AT32F407xx_v2::SpecializationKey> : StartupConfiguration<PULLUP_INPUT> {};
 
 #endif // ARTERYPIN_HPP

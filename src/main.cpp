@@ -1,17 +1,19 @@
-//#include "can1registers.hpp"
-//#include "can2registers.hpp"
+#include "can1registers.hpp"
+#include "can2registers.hpp"
 
-//#include "fields.hpp"
+#include "fields.hpp"
 
-//#include "metautils.hpp"
-//#include "configuration.h"
+#include "metautils.hpp"
+#include "configuration.h"
 
 //#include <algorithm>
 //#include <vector>
 
+using namespace AT32F407xx_v2;
+
 int main()
 {
-    //Values<CAN1::MCTRL::DZEN::Value0,CAN2::MCTRL::AEBOEN::Value1>::Set();
+    Values<CAN1::MCTRL::DZEN::Value0,CAN2::MCTRL::AEBOEN::Value1>::Set();
 
     //CAN1::MCTRL::SetFields<CAN1::MCTRL::PTD::Value0,
                            //CAN1::MCTRL::AEBOEN::Value1>();
