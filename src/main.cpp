@@ -1,23 +1,27 @@
-#include "can1registers.hpp"
-#include "can2registers.hpp"
-
-#include "fields.hpp"
-
-#include "metautils.hpp"
-#include "configuration.h"
+#include "adc1registers.hpp"
 
 //#include <algorithm>
 //#include <vector>
 
-using namespace AT32F407xx_v2;
+using namespace metaMCU::AT32F407xx_v2;
 
 int main()
 {
-    Values<CAN1::MCTRL::DZEN::Value0,CAN2::MCTRL::AEBOEN::Value1>::Set();
+
+    auto addr = ADC1::RTS::Register.address();
+
+    auto ft = ADC1::RTS::OCCS.set()
+
+    ADC2.STS.OCCS.Value0.set();
 
     //CAN1::MCTRL::SetFields<CAN1::MCTRL::PTD::Value0,
                            //CAN1::MCTRL::AEBOEN::Value1>();
 
+    {
+        using namespace ADC1::RTS;
+    }
+
+    //(ADC1::STS::PCCS::Value0 | ADC1::STS::PCCS::Value0 | ADC1::STS::PCCS::Value0);
 
 /*
   RCC::AHB1ENR::GPIOAEN::Enable::Set() ;
