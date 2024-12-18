@@ -13,42 +13,18 @@
 #include "field.hpp"
 
 namespace metaMCU {
-    namespace AT32F407xx_v2
-    {
-        namespace ADC1
-        {
+    namespace AT32F407xx_v2 {
+        namespace ADC1 {
             constexpr core::Register<0x40012400, uint32_t, Read_write_t> RTS;
             namespace RTS_b
             {
-                constexpr core::Field<, 4, 1, Read_write_t> OCCS;
-                namespace OCCS
+                constexpr core::Field<decltype(RTS), 4, 1, Read_write_t> OCCS;
+                namespace OCCS_v
                 {
-
-
-                    constexpr core::Field<core::Register<0x40012400, uint32_t, Read_write_t>, 4, 1, Read_write_t> OS;
-
+                    constexpr core::Field_value<decltype(OCCS), 0U> Value0;
+                    constexpr core::Field_value<decltype(OCCS), 0U> Value1;
                 }
-
-                    inline namespace Field
-                    {
-                    constexpr core::Field<core::Register<0x40012400, uint32_t, Read_write_t>, 4, 1, Read_write_t> OCCS;
-                    }
-
-                    namespace GCCS
-                    {
-                    constexpr core::Field<core::Register<0x40012400, uint32_t, Read_write_t>, 4, 1, Read_write_t> Field;
-
-
-                    }
             }
-
-            struct STS : public core::Register<0x40012400, uint32_t, Read_write_t>
-            {
-                struct PCCS : public core::Field<STS, 3, 1, Read_write_t>
-                {
-                    static constexpr core::Field_value<PCCS, 0U> Value0{};
-                };
-            };
 
 
                 /*
@@ -65,7 +41,7 @@ namespace metaMCU {
                 };
                 */
         }
-
+/*
         struct ADC2_t
         {
         private:
@@ -82,6 +58,7 @@ namespace metaMCU {
         public:
             STS_t STS{};
         } constexpr ADC2;
+*/
     }
 }
 

@@ -8,17 +8,19 @@ using namespace metaMCU::AT32F407xx_v2;
 int main()
 {
 
-    auto addr = ADC1::RTS::Register.address();
+    //auto addr = ADC1::RTS::Register.address();
 
-    auto ft = ADC1::RTS::OCCS.set()
+    //auto ft = ADC1::RTS::OCCS.set();
 
-    ADC2.STS.OCCS.Value0.set();
+    //ADC2.STS.OCCS.Value0.set();
+
+    ADC1::RTS_b::OCCS_v::Value0.set();
 
     //CAN1::MCTRL::SetFields<CAN1::MCTRL::PTD::Value0,
                            //CAN1::MCTRL::AEBOEN::Value1>();
 
     {
-        using namespace ADC1::RTS;
+        //using namespace ADC1::RTS;
     }
 
     //(ADC1::STS::PCCS::Value0 | ADC1::STS::PCCS::Value0 | ADC1::STS::PCCS::Value0);
