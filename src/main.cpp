@@ -14,7 +14,13 @@ int main()
 
     //ADC2.STS.OCCS.Value0.set();
 
-    ADC1::RTS_b::OCCS_v::Value0.set();
+    {
+        using namespace ADC1::RTS_b;
+
+        (OCCS_v::Value0 | OCCR_v::Value1).set_atomic();
+    }
+
+    ADC1::RTS_b::OCCS_v::Value0;
 
     //CAN1::MCTRL::SetFields<CAN1::MCTRL::PTD::Value0,
                            //CAN1::MCTRL::AEBOEN::Value1>();

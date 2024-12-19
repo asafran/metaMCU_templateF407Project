@@ -10,19 +10,28 @@
 #if !defined(ADC1REGISTERS_HPP)
 #define ADC1REGISTERS_HPP
 
-#include "field.hpp"
+#include "cortexM3.hpp"
 
 namespace metaMCU {
     namespace AT32F407xx_v2 {
         namespace ADC1 {
-            constexpr core::Register<0x40012400, uint32_t, Read_write_t> RTS;
+            using namespace CortexM3;
+
+            constexpr Register<0x40012400, uint32_t, Read_write_t> RTS;
             namespace RTS_b
             {
-                constexpr core::Field<decltype(RTS), 4, 1, Read_write_t> OCCS;
+                constexpr Field<decltype(RTS), 0, 0b11, Read_write_t> OCCS;
                 namespace OCCS_v
                 {
-                    constexpr core::Field_value<decltype(OCCS), 0U> Value0;
-                    constexpr core::Field_value<decltype(OCCS), 0U> Value1;
+                    constexpr Field_value<decltype(OCCS), 0U> Value0;
+                    constexpr Field_value<decltype(OCCS), 1U> Value1;
+                }
+
+                constexpr Field<decltype(RTS), 2, 0b111, Read_write_t> OCCR;
+                namespace OCCR_v
+                {
+                    constexpr Field_value<decltype(OCCR), 0U> Value0;
+                    constexpr Field_value<decltype(OCCR), 3U> Value1;
                 }
             }
 
